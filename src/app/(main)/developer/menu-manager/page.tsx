@@ -1,3 +1,4 @@
+"use client";
 
 import { useState } from 'react'
 import { PageLayout } from '@/components/PageLayout'
@@ -114,7 +115,11 @@ export default function MenuManager() {
   }
 
   const startEditItem = (configId: string, item: MenuItem) => {
-    setItemForm(item)
+    setItemForm({
+      ...item,
+      requiredRole: item.requiredRole || null,
+      children: item.children || []
+    })
     setEditingItem({configId, item})
     setShowAddItem(configId)
   }

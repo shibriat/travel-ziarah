@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import type { User, UserRole } from '@/contexts/AuthContext'
+import type { User, UserRole } from '@/types/auth'
 
 const roleHierarchy: Record<UserRole, number> = {
   user: 1,
