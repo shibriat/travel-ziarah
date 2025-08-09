@@ -1,5 +1,8 @@
 
+"use client";
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 export type UserRole = 'admin' | 'moderator' | 'user';
 
@@ -32,8 +35,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    // Check localStorage for saved user
-    const savedUser = localStorage.getItem('auth_user');
+    // Check Cookies for saved user
+    const savedUser = Cookies.get('auth_user');
     if (savedUser) {
       setUser(JSON.parse(savedUser));
     }
@@ -44,7 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const foundUser = mockUsers.find(u => u.email === email);
     if (foundUser && password === 'password') { // Mock password check
       setUser(foundUser);
-      localStorage.setItem('auth_user', JSON.stringify(foundUser));
+      Cookies.set('auth_user', JSON.stringify(foundUser), { expires: 7 }); // Expires in 7 days
       return true;
     }
     return false;
@@ -52,7 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('auth_user');
+    Cookies.remove('auth_user');
   };
 
   const hasPermission = (requiredRole: UserRole): boolean => {

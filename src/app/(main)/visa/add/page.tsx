@@ -6,11 +6,13 @@ import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
-import { useNavigate } from 'react-router-dom'
+"use client";
+
+import { useRouter } from 'next/navigation'
 import { ArrowLeft, Save } from 'lucide-react'
 
 export default function AddVisa() {
-  const navigate = useNavigate()
+  const router = useRouter()
   const [formData, setFormData] = useState({
     applicantName: '',
     passportNumber: '',
@@ -35,7 +37,7 @@ export default function AddVisa() {
     const updatedVisas = [...existingVisas, newVisa]
     localStorage.setItem('visas', JSON.stringify(updatedVisas))
     
-    navigate('/visa')
+    router.push('/visa')
   }
 
   return (
@@ -43,7 +45,7 @@ export default function AddVisa() {
       <div className="max-w-2xl mx-auto">
         <Button 
           variant="outline" 
-          onClick={() => navigate('/visa')}
+          onClick={() => router.push('/visa')}
           className="mb-6"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
@@ -142,7 +144,7 @@ export default function AddVisa() {
                   <Save className="w-4 h-4 mr-2" />
                   Save Application
                 </Button>
-                <Button type="button" variant="outline" onClick={() => navigate('/visa')}>
+                <Button type="button" variant="outline" onClick={() => router.push('/visa')}>
                   Cancel
                 </Button>
               </div>

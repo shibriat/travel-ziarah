@@ -6,11 +6,13 @@ import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
-import { useNavigate } from 'react-router-dom'
+"use client";
+
+import { useRouter } from 'next/navigation'
 import { ArrowLeft, Save } from 'lucide-react'
 
 export default function AddTransport() {
-  const navigate = useNavigate()
+  const router = useRouter()
   const [formData, setFormData] = useState({
     vehicleNumber: '',
     vehicleType: '',
@@ -37,7 +39,7 @@ export default function AddTransport() {
     const updatedTransports = [...existingTransports, newTransport]
     localStorage.setItem('transports', JSON.stringify(updatedTransports))
     
-    navigate('/transport')
+    router.push('/transport')
   }
 
   return (
@@ -45,7 +47,7 @@ export default function AddTransport() {
       <div className="max-w-2xl mx-auto">
         <Button 
           variant="outline" 
-          onClick={() => navigate('/transport')}
+          onClick={() => router.push('/transport')}
           className="mb-6"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
@@ -147,7 +149,7 @@ export default function AddTransport() {
                   <Save className="w-4 h-4 mr-2" />
                   Save Vehicle
                 </Button>
-                <Button type="button" variant="outline" onClick={() => navigate('/transport')}>
+                <Button type="button" variant="outline" onClick={() => router.push('/transport')}>
                   Cancel
                 </Button>
               </div>
