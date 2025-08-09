@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { AuthProvider } from "@/contexts/AuthContext";
-import { MenuProvider } from "@/contexts/MenuContext";
+import { AuthProvider } from "@/contexts/AuthProvider";
+import { MenuProvider } from "@/contexts/MenuProvider";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
