@@ -1,5 +1,7 @@
+"use client";
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { PageLayout } from '@/components/PageLayout'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -7,9 +9,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
-"use client";
-
-import { useRouter } from 'next/navigation'
 import { ArrowLeft, Save } from 'lucide-react'
 
 export default function AddHotel() {

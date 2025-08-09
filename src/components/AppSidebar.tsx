@@ -1,6 +1,9 @@
 
+"use client";
+
 import { LayoutDashboard, Users, Settings, BarChart3, FileText, Shield, LogOut, CreditCard, Car, Building, Menu, List, Plus, ChevronDown } from "lucide-react"
-import { NavLink, useLocation } from "react-router-dom"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { useAuth } from "@/contexts/AuthContext"
 import { useMenu } from "@/contexts/MenuContext"
 import { useState } from "react"
@@ -37,8 +40,7 @@ const iconMap = {
 
 export function AppSidebar() {
   const { state } = useSidebar()
-  const location = useLocation()
-  const currentPath = location.pathname
+  const currentPath = usePathname()
   const { user, logout, hasPermission } = useAuth()
   const { activeMenuItems } = useMenu()
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set())
@@ -46,9 +48,9 @@ export function AppSidebar() {
   const isCollapsed = state === "collapsed"
   
   const isActive = (path: string) => currentPath === path
-  const getNavClasses = ({ isActive }: { isActive: boolean }) =>
-    isActive 
-      ? "bg-primary/20 text-primary font-medium border-l-2 border-primary" 
+  const getNavClasses = (path: string) =>
+    isActive(path)
+      ? "bg-primary/20 text-primary font-medium border-l-2 border-primary"
       : "hover:bg-white/10 text-sidebar-foreground/80 hover:text-sidebar-foreground transition-all duration-200"
 
   const toggleExpanded = (itemId: string) => {
@@ -103,14 +105,13 @@ export function AppSidebar() {
                 return (
                   <SidebarMenuItem key={item.id}>
                     <SidebarMenuButton asChild>
-                      <NavLink 
-                        to={item.url} 
-                        end 
-                        className={getNavClasses}
+                      <Link
+                        href={item.url}
+                        className={getNavClasses(item.url)}
                       >
                         <IconComponent className="w-4 h-4 shrink-0" />
                         {!isCollapsed && <span className="truncate">{item.title}</span>}
-                      </NavLink>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 )
@@ -142,13 +143,13 @@ export function AppSidebar() {
                               const ChildIconComponent = iconMap[child.icon as keyof typeof iconMap] || LayoutDashboard
                               return (
                                 <SidebarMenuButton key={child.id} asChild className="py-1 h-8">
-                                  <NavLink 
-                                    to={child.url} 
-                                    className={getNavClasses}
+                                  <Link
+                                    href={child.url}
+                                    className={getNavClasses(child.url)}
                                   >
                                     <ChildIconComponent className="w-3 h-3 shrink-0" />
                                     <span className="text-sm truncate">{child.title}</span>
-                                  </NavLink>
+                                  </Link>
                                 </SidebarMenuButton>
                               )
                             })}
